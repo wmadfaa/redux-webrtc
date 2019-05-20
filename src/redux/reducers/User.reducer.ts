@@ -1,6 +1,8 @@
+import { AnyAction } from "redux";
+import { User } from "../Definitions";
 import * as constants from "../Constants";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: User = {
   displayName: "",
   globalVolumeLimit: 1,
   mediaEnabled: true,
@@ -9,11 +11,13 @@ const INITIAL_STATE = {
   voiceActivityThreshold: -65
 };
 
-export const updatePreference = (state, action) => {
+type UserReducerType = (state: User, action: AnyAction) => User;
+
+export const updatePreference: UserReducerType = (state, action) => {
   return { ...state, ...action.payload };
 };
 
-export default function(state, action) {
+export default function(state: User, action: AnyAction) {
   switch (action.type) {
     case constants.SET_USER_PREFERENCE:
       return updatePreference(state, action);
@@ -30,12 +34,8 @@ export default function(state, action) {
     case constants.DEVICES:
       const outputDevice = state.audioOutputDeviceId;
       if (outputDevice) {
-        let hasOutputDevice = false;
-        Object.keys(state).map(device => {
-          if (state[device].id === outputDevice) {
-            hasOutputDevice = true;
-          }
-          if (hasOutputDevice) {
+        action.payload.map(device => {
+          if (device.id === outputDevice) {
             return state;
           }
         });

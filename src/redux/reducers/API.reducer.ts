@@ -1,6 +1,18 @@
+import { AnyAction } from "redux";
+import { APIConfig } from "../Definitions";
 import * as constants from "../Constants";
 
-const INITIAL_STATE = {
+export interface ApiState {
+  connectionAttempts: number;
+  connectionState: string;
+  signalingClient?: any; // SignalingClient
+  config: APIConfig;
+  configUrl: string;
+  queuedTelemetry: any; // TelemetryEvent[]
+  token: string;
+}
+
+const INITIAL_STATE: ApiState = {
   config: {
     apiVersion: "",
     credential: "",
@@ -11,7 +23,10 @@ const INITIAL_STATE = {
     roomConfigUrl: "",
     signalingUrl: "",
     telemetryUrl: "",
-    userId: ""
+    userId: "",
+    screensharingExtensions: {
+      chrome: ""
+    }
   },
   configUrl: "",
   connectionAttempts: 0,
@@ -21,7 +36,7 @@ const INITIAL_STATE = {
   token: ""
 };
 
-export default function(state, action) {
+export default function(state: ApiState, action: AnyAction): ApiState {
   switch (action.type) {
     case constants.SIGNALING_CLIENT:
       return { ...state, signalingClient: action.payload };

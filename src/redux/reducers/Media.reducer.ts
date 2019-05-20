@@ -1,18 +1,26 @@
+import { AnyAction } from "redux";
+import { Media } from "../Definitions";
 import * as constants from "../Constants";
 
-const INITIAL_STATE = {};
+export interface MediaState {
+  [key: string]: Media;
+}
 
-export const addMedia = (state, action) => {
+const INITIAL_STATE: MediaState = {};
+
+type MediaReducerType = (state: MediaState, action: AnyAction) => MediaState;
+
+export const addMedia: MediaReducerType = (state, action) => {
   return { ...state, [action.payload.id]: { ...action.payload } };
 };
 
-export const removeMediaReducer = (state, action) => {
+export const removeMediaReducer: MediaReducerType = (state, action) => {
   const { ...result } = state;
   delete result[action.payload.id];
   return result;
 };
 
-export const updatedMedia = (state, action) => {
+export const updatedMedia: MediaReducerType = (state, action) => {
   const existing = state[action.payload.id];
   if (!existing) {
     return state;
@@ -26,17 +34,20 @@ export const updatedMedia = (state, action) => {
   };
 };
 
-export const removeCallMedia = (state, action) => {
-  return Object.keys(state).filter(
-    call =>
-      !(
-        state[call].source === "remote" &&
-        state[call].roomAddress === action.payload.roomAddress
-      )
-  );
+export const removeCallMedia: MediaReducerType = (state, action) => {
+  return Object.keys(state).reduce((acc, id) => {
+    const call = state[id];
+    if (
+      call.source === "remote" &&
+      call.roomAddress === action.payload.roomAddress
+    ) {
+      return { ...acc, [id]: call };
+    }
+    return { ...acc };
+  }, {});
 };
 
-export default function(state, action) {
+export default function(state: MediaState, action: AnyAction): MediaState {
   switch (action.type) {
     case constants.ADD_MEDIA:
       return addMedia(state, action);

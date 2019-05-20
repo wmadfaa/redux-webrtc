@@ -1,8 +1,15 @@
+import { AnyAction } from "redux";
+import { Call } from "../Definitions";
 import * as constants from "../Constants";
 
-const INITIAL_STATE = {};
+export interface CallsState {
+  [key: string]: Call;
+}
+const INITIAL_STATE: CallsState = {};
 
-export const addCall = (state, action) => {
+type CallReducerType = (state: CallsState, action: AnyAction) => CallsState;
+
+export const addCall: CallReducerType = (state, action) => {
   return {
     ...state,
     [action.payload.roomAddress]: {
@@ -20,7 +27,7 @@ export const addCall = (state, action) => {
   };
 };
 
-export const updatedCall = (state, action) => {
+export const updatedCall: CallReducerType = (state, action) => {
   if (!state[action.payload.roomAddress]) {
     state = addCall(state, action);
   }
@@ -58,13 +65,13 @@ export const updatedCall = (state, action) => {
   return state;
 };
 
-export const removeCall = (state, action) => {
+export const removeCall: CallReducerType = (state, action) => {
   const { ...result } = state;
   delete result[action.payload.roomAddress];
   return result;
 };
 
-export default function(state, action) {
+export default function(state: CallsState, action: AnyAction): CallsState {
   switch (action.type) {
     case constants.JOIN_CALL:
       return updatedCall(state, action);

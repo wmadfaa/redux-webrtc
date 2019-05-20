@@ -1,8 +1,38 @@
+import {
+  JoinRoom,
+  JoinRoomFailed,
+  JoinRoomSuccess,
+  LeaveRoom,
+  LockRoom,
+  RoomLocked,
+  RoomUnlocked,
+  SelfUpdated,
+  UnlockRoom
+} from "../actions";
+import { Room } from "../Definitions";
 import * as constants from "../Constants";
 
-const INITIAL_STATE = {};
+export interface RoomsState {
+  [key: string]: Room;
+}
 
-export const addRoom = (state, action) => {
+const INITIAL_STATE: RoomsState = {};
+
+type RoomsReducerType = (
+  state: RoomsState,
+  action:
+    | LeaveRoom
+    | JoinRoom
+    | JoinRoomSuccess
+    | JoinRoomFailed
+    | LockRoom
+    | UnlockRoom
+    | RoomLocked
+    | RoomUnlocked
+    | SelfUpdated
+) => RoomsState;
+
+export const addRoom: RoomsReducerType = (state, action) => {
   return {
     ...state,
     [action.payload.roomAddress]: {
@@ -24,7 +54,7 @@ export const addRoom = (state, action) => {
   };
 };
 
-export const updateRoom = (state, action) => {
+export const updateRoom: RoomsReducerType = (state, action) => {
   const existingRoom = state[action.payload.roomAddress];
   if (!existingRoom) {
     return state;
@@ -60,7 +90,7 @@ export const updateRoom = (state, action) => {
   };
 };
 
-export const updateRoomLock = (state, action) => {
+export const updateRoomLock: RoomsReducerType = (state, action) => {
   const existingRoom = state[action.payload.roomAddress];
   if (!existingRoom) {
     return state;
@@ -99,13 +129,25 @@ export const updateRoomLock = (state, action) => {
   }
 };
 
-export const removeRoom = (state, action) => {
+export const removeRoom: RoomsReducerType = (state, action) => {
   const { ...result } = state;
   delete result[action.payload.roomAddress];
   return result;
 };
 
-export default function(state, action) {
+export default function(
+  state: RoomsState,
+  action:
+    | LeaveRoom
+    | JoinRoom
+    | JoinRoomSuccess
+    | JoinRoomFailed
+    | LockRoom
+    | UnlockRoom
+    | RoomLocked
+    | RoomUnlocked
+    | SelfUpdated
+): RoomsState {
   switch (action.type) {
     case constants.SELF_UPDATED:
       return updateRoom(state, action);

@@ -1,6 +1,12 @@
+import { DeviceCapture, DevicePermissionDenied, Devices } from "../actions";
+import { DevicePermissions } from "../Definitions";
 import * as constants from "../Constants";
 
-const INITIAL_STATE = {
+export interface DevicesState extends DevicePermissions {
+  devices: MediaDeviceInfo[];
+}
+
+const INITIAL_STATE: DevicesState = {
   cameraPermissionDenied: false,
   cameraPermissionGranted: false,
   devices: [],
@@ -14,7 +20,10 @@ const INITIAL_STATE = {
   requestingMicrophoneCapture: false
 };
 
-export default function(state, action) {
+export default function(
+  state: DevicesState,
+  action: Devices | DeviceCapture | DevicePermissionDenied
+): DevicesState {
   switch (action.type) {
     case constants.DEVICES:
       const devices = action.payload;

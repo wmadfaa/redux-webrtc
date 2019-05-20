@@ -1,16 +1,28 @@
-import { combineReducers } from "redux";
+import { combineReducers, Reducer } from "redux";
 
-import api from "./API.reducer";
-import calls from "./Calls.reducer";
-import chats from "./Chats.reducer";
-import connections from "./Connections.reduce";
-import devices from "./Devices.reducer";
-import media from "./Media.reducer";
-import peers from "./Peers.reducer";
-import rooms from "./Rooms.reducer";
-import user from "./User.reducer";
+import api, { ApiState } from "./API.reducer";
+import calls, { CallsState } from "./Calls.reducer";
+import chats, { ChatsState } from "./Chats.reducer";
+import connections, { ConnectionsState } from "./Connections.reduce";
+import devices, { DevicesState } from "./Devices.reducer";
+import media, { MediaState } from "./Media.reducer";
+import peers, { PeersState } from "./Peers.reducer";
+import rooms, { RoomsState } from "./Rooms.reducer";
+import user, { UserState } from "./User.reducer";
 
-export default combineReducers({
+export interface State {
+  api: ApiState;
+  calls: CallsState;
+  chats: ChatsState;
+  connections: ConnectionsState;
+  devices: DevicesState;
+  media: MediaState;
+  peers: PeersState;
+  rooms: RoomsState;
+  user: UserState;
+}
+
+export const reducers: Reducer<State> = combineReducers<State>({
   api,
   calls,
   chats,
@@ -21,3 +33,5 @@ export default combineReducers({
   rooms,
   user
 });
+
+export default reducers;

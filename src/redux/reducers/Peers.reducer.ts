@@ -1,8 +1,16 @@
+import { AnyAction } from "redux";
+import { Peer } from "../Definitions";
 import * as constants from "../Constants";
 
-const INITIAL_STATE = {};
+export interface PeersState {
+  [key: string]: Peer;
+}
 
-export const addPeer = (state, action) => {
+const INITIAL_STATE: PeersState = {};
+
+type PeersReducerType = (state: PeersState, action: AnyAction) => PeersState;
+
+export const addPeer: PeersReducerType = (state, action) => {
   if (state[action.payload.peerAddress]) {
     return updatePeer(state, {
       payload: {
@@ -39,7 +47,7 @@ export const addPeer = (state, action) => {
   };
 };
 
-export const updatePeer = (state, action) => {
+export const updatePeer: PeersReducerType = (state, action) => {
   const existingPeer = state[action.payload.peerAddress];
   if (!existingPeer) {
     return state;
@@ -65,23 +73,23 @@ export const updatePeer = (state, action) => {
   };
 };
 
-export const removePeer = (state, action) => {
+export const removePeer: PeersReducerType = (state, action) => {
   const { ...result } = state;
   delete result[action.payload.peerAddress];
   return result;
 };
 
-export const removeRoomPeers = (state, action) => {
-  return Object.keys(state).filter(
-    peer =>
-      !(
-        state[peer].source === "remote" &&
-        state[peer].roomAddress === action.payload.roomAddress
-      )
-  );
+export const removeRoomPeers: PeersReducerType = (state, action) => {
+  return Object.keys(state).reduce((acc, id) => {
+    const peer = state[id];
+    if (peer.roomAddress === action.payload.roomAddress) {
+      return { ...acc, [id]: peer };
+    }
+    return { ...acc };
+  }, {});
 };
 
-export default function(state, action) {
+export default function(state: PeersState, action: AnyAction): PeersState {
   switch (action.type) {
     case constants.PEER_ONLINE:
       return addPeer(state, action);

@@ -1,15 +1,22 @@
+import { AnyAction } from "redux";
+import { Chat } from "../Definitions";
 import * as constants from "../Constants";
 
-const INITIAL_STATE = {};
+export interface ChatsState {
+  [key: string]: Chat;
+}
+const INITIAL_STATE: ChatsState = {};
 
-export const editChat = (original, replacement) => {
+type ChatsReducerType = (state: ChatsState, action: AnyAction) => ChatsState;
+
+export const editChat = (original: Chat, replacement: Chat): Chat => {
   if (!original) {
     return replacement;
   }
   return { ...replacement, editedTime: replacement.time, time: original.time };
 };
 
-export const addChat = (state, action) => {
+export const addChat: ChatsReducerType = (state, action) => {
   const chat = action.payload;
   const existing = state[chat.id];
 
@@ -47,7 +54,7 @@ export const addChat = (state, action) => {
   return state;
 };
 
-export default function(state, action) {
+export default function(state: ChatsState, action: AnyAction): ChatsState {
   switch (action.type) {
     case constants.CHAT_INCOMING:
       return addChat(state, action);
