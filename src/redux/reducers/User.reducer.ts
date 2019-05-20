@@ -1,4 +1,4 @@
-import * as constants from "../../Constants";
+import * as constants from "../Constants";
 
 const INITIAL_STATE = {
   displayName: "",
@@ -30,9 +30,12 @@ export default function(state, action) {
     case constants.DEVICES:
       const outputDevice = state.audioOutputDeviceId;
       if (outputDevice) {
-        Object.keys(state).map(({ value }) => {
-          const device = value;
-          if (device.id === outputDevice) {
+        let hasOutputDevice = false;
+        Object.keys(state).map(device => {
+          if (state[device].id === outputDevice) {
+            hasOutputDevice = true;
+          }
+          if (hasOutputDevice) {
             return state;
           }
         });

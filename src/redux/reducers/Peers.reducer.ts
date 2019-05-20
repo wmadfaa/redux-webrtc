@@ -1,4 +1,4 @@
-import * as constants from "../../Constants";
+import * as constants from "../Constants";
 
 const INITIAL_STATE = {};
 
@@ -72,17 +72,13 @@ export const removePeer = (state, action) => {
 };
 
 export const removeRoomPeers = (state, action) => {
-  const { ...result } = state;
-  Object.keys(state).map(({ value }) => {
-    const peer = state[value];
-    if (
-      peer.source === "remote" &&
-      peer.roomAddress === action.payload.roomAddress
-    ) {
-      delete result[value];
-    }
-  });
-  return result;
+  return Object.keys(state).filter(
+    peer =>
+      !(
+        state[peer].source === "remote" &&
+        state[peer].roomAddress === action.payload.roomAddress
+      )
+  );
 };
 
 export default function(state, action) {

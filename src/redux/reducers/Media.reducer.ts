@@ -1,4 +1,4 @@
-import * as constants from "../../Constants";
+import * as constants from "../Constants";
 
 const INITIAL_STATE = {};
 
@@ -27,17 +27,13 @@ export const updatedMedia = (state, action) => {
 };
 
 export const removeCallMedia = (state, action) => {
-  const { ...result } = state;
-  Object.keys(state).map(({ value }) => {
-    const media = state[value];
-    if (
-      media.source === "remote" &&
-      media.roomAddress === action.payload.roomAddress
-    ) {
-      delete result[value];
-    }
-  });
-  return result;
+  return Object.keys(state).filter(
+    call =>
+      !(
+        state[call].source === "remote" &&
+        state[call].roomAddress === action.payload.roomAddress
+      )
+  );
 };
 
 export default function(state, action) {

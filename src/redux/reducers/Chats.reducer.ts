@@ -1,4 +1,4 @@
-import * as constants from "../../Constants";
+import * as constants from "../Constants";
 
 const INITIAL_STATE = {};
 
