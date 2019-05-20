@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import {
   JoinRoom,
   JoinRoomFailed,
@@ -135,7 +136,7 @@ export const removeRoom: RoomsReducerType = (state, action) => {
   return result;
 };
 
-export default function(
+const reducer: Reducer = (
   state: RoomsState,
   action:
     | LeaveRoom
@@ -147,7 +148,7 @@ export default function(
     | RoomLocked
     | RoomUnlocked
     | SelfUpdated
-): RoomsState {
+): RoomsState => {
   switch (action.type) {
     case constants.SELF_UPDATED:
       return updateRoom(state, action);
@@ -167,4 +168,6 @@ export default function(
     default:
       return INITIAL_STATE;
   }
-}
+};
+
+export default reducer;

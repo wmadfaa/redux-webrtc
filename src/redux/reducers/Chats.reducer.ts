@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { AnyAction, Reducer } from "redux";
 import { Chat } from "../Definitions";
 import * as constants from "../Constants";
 
@@ -54,7 +54,7 @@ export const addChat: ChatsReducerType = (state, action) => {
   return state;
 };
 
-export default function(state: ChatsState, action: AnyAction): ChatsState {
+const reducer: Reducer = (state: ChatsState, action: AnyAction): ChatsState => {
   switch (action.type) {
     case constants.CHAT_INCOMING:
       return addChat(state, action);
@@ -63,4 +63,6 @@ export default function(state: ChatsState, action: AnyAction): ChatsState {
     default:
       return INITIAL_STATE;
   }
-}
+};
+
+export default reducer;

@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { AnyAction, Reducer } from "redux";
 import { Call } from "../Definitions";
 import * as constants from "../Constants";
 
@@ -71,7 +71,7 @@ export const removeCall: CallReducerType = (state, action) => {
   return result;
 };
 
-export default function(state: CallsState, action: AnyAction): CallsState {
+const reducer: Reducer = (state: CallsState, action: AnyAction): CallsState => {
   switch (action.type) {
     case constants.JOIN_CALL:
       return updatedCall(state, action);
@@ -86,4 +86,6 @@ export default function(state: CallsState, action: AnyAction): CallsState {
     default:
       return INITIAL_STATE;
   }
-}
+};
+
+export default reducer;

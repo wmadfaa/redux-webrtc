@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import { DeviceCapture, DevicePermissionDenied, Devices } from "../actions";
 import { DevicePermissions } from "../Definitions";
 import * as constants from "../Constants";
@@ -20,10 +21,10 @@ const INITIAL_STATE: DevicesState = {
   requestingMicrophoneCapture: false
 };
 
-export default function(
+const reducer: Reducer = (
   state: DevicesState,
   action: Devices | DeviceCapture | DevicePermissionDenied
-): DevicesState {
+): DevicesState => {
   switch (action.type) {
     case constants.DEVICES:
       const devices = action.payload;
@@ -61,4 +62,6 @@ export default function(
     default:
       return INITIAL_STATE;
   }
-}
+};
+
+export default reducer;

@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { AnyAction, Reducer } from "redux";
 import { APIConfig } from "../Definitions";
 import * as constants from "../Constants";
 
@@ -36,7 +36,7 @@ const INITIAL_STATE: ApiState = {
   token: ""
 };
 
-export default function(state: ApiState, action: AnyAction): ApiState {
+const reducer: Reducer = (state: ApiState, action: AnyAction): ApiState => {
   switch (action.type) {
     case constants.SIGNALING_CLIENT:
       return { ...state, signalingClient: action.payload };
@@ -74,4 +74,6 @@ export default function(state: ApiState, action: AnyAction): ApiState {
     }
   }
   return state;
-}
+};
+
+export default reducer;

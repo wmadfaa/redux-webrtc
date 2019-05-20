@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { AnyAction, Reducer } from "redux";
 import { Media } from "../Definitions";
 import * as constants from "../Constants";
 
@@ -47,7 +47,7 @@ export const removeCallMedia: MediaReducerType = (state, action) => {
   }, {});
 };
 
-export default function(state: MediaState, action: AnyAction): MediaState {
+const reducer: Reducer = (state: MediaState, action: AnyAction): MediaState => {
   switch (action.type) {
     case constants.ADD_MEDIA:
       return addMedia(state, action);
@@ -60,4 +60,6 @@ export default function(state: MediaState, action: AnyAction): MediaState {
     default:
       return INITIAL_STATE;
   }
-}
+};
+
+export default reducer;

@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { AnyAction, Reducer } from "redux";
 import { PeerConnection } from "../Definitions";
 import * as constants from "../Constants";
 
@@ -48,10 +48,10 @@ export const removeConnection: ConnectionsReducerType = (state, action) => {
   return result;
 };
 
-export default function(
+const reducer: Reducer = (
   state: ConnectionsState,
   action: AnyAction
-): ConnectionsState {
+): ConnectionsState => {
   switch (action.type) {
     case constants.PEER_CONNECTION_ADDED:
       return addConnection(state, action);
@@ -62,4 +62,6 @@ export default function(
     default:
       return INITIAL_STATE;
   }
-}
+};
+
+export default reducer;

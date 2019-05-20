@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { AnyAction, Reducer } from "redux";
 import { Peer } from "../Definitions";
 import * as constants from "../Constants";
 
@@ -89,7 +89,7 @@ export const removeRoomPeers: PeersReducerType = (state, action) => {
   }, {});
 };
 
-export default function(state: PeersState, action: AnyAction): PeersState {
+const reducer: Reducer = (state: PeersState, action: AnyAction): PeersState => {
   switch (action.type) {
     case constants.PEER_ONLINE:
       return addPeer(state, action);
@@ -102,4 +102,6 @@ export default function(state: PeersState, action: AnyAction): PeersState {
     default:
       return INITIAL_STATE;
   }
-}
+};
+
+export default reducer;

@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { AnyAction, Reducer } from "redux";
 import { User } from "../Definitions";
 import * as constants from "../Constants";
 
@@ -17,7 +17,7 @@ export const updatePreference: UserReducerType = (state, action) => {
   return { ...state, ...action.payload };
 };
 
-export default function(state: User, action: AnyAction) {
+const reducer: Reducer = (state: User, action: AnyAction): User => {
   switch (action.type) {
     case constants.SET_USER_PREFERENCE:
       return updatePreference(state, action);
@@ -50,4 +50,6 @@ export default function(state: User, action: AnyAction) {
     default:
       return INITIAL_STATE;
   }
-}
+};
+
+export default reducer;
