@@ -2,7 +2,7 @@ import { State } from "../reducers";
 import { Chat, ChatGroup, Peer } from "../Definitions";
 
 import { getPeerByAddress } from "./Peers.selectors";
-import { getUserDataForRoom } from "./user.selectors";
+import { getUserDataForRoom } from "./User.selectors";
 import * as constants from "../Constants";
 
 export const getChatsForRoom = (state: State, roomAddress: string): Chat[] => {
