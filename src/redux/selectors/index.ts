@@ -8,12 +8,12 @@ import * as Rooms from "./Rooms.selectors";
 import * as User from "./User.selectors";
 
 export default {
-  API,
-  Calls,
-  Chats,
-  Devices,
-  Media,
-  Peers,
-  Rooms,
-  User
+  api: API,
+  calls: Calls,
+  chats: Chats,
+  devices: Devices,
+  media: Media,
+  peers: Peers,
+  rooms: Rooms,
+  user: User
 };
