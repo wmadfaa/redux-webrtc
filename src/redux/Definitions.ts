@@ -94,7 +94,7 @@ export interface Chat {
   editedTime?: Date;
 }
 export interface ChatGroup {
-  senderAddress: string;
+  senderAddress?: string;
   direction: "incoming" | "outgoing";
   displayName: string;
   chats: Chat[];
